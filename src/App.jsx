@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import LogOut from './pages/LogOut'
 import TakeQuiz from './components/TakeQuiz'
+import Quiz from './components/Quiz'
 
 function App() {
 
@@ -17,9 +18,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Home isAuth={isAuth} />}></Route>
           <Route path='/login' element={<Login isAuth={isAuth} setIsAuth={setIsAuth} />} />
-          <Route path='/create-test' element={<CreateTest />}></Route>
+          <Route path='/create' element={<CreateTest />}></Route>
           <Route path='/f' element={<TakeQuiz />}></Route>
-
         </Routes>
       </BrowserRouter>
 

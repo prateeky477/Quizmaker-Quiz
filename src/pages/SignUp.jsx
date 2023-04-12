@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
-import { auth, googleProvider } from "../config/firebase";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth } from "../config/firebase";
+import { createUserWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ setIsAuth }) => {
+const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const navigate = useNavigate()
 
-    const handleSignIn = async () => {
+    const handleSignUp = async () => {
         try {
-            await signInWithEmailAndPassword
-            
-            (auth, email, password);
+            await createUserWithEmailAndPassword(auth, email, password);
             localStorage.setItem("isAuth", true)
             setIsAuth(true)
             navigate("/")
@@ -26,17 +24,6 @@ const Login = ({ setIsAuth }) => {
 
     console.log(auth?.currentUser?.email);
 
-    const handleSignInWithGoogle = async () => {
-        try {
-            await signInWithPopup(auth, googleProvider);
-            localStorage.setItem("isAuth", true)
-            setIsAuth(true)
-            navigate("/")
-        }
-        catch (err) {
-            console.error(err)
-        }
-    };
 
 
     return (
@@ -72,25 +59,16 @@ const Login = ({ setIsAuth }) => {
                     </div>
                     <motion.button
                         className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-                        onClick={handleSignIn}
+                        onClick={handleSignUp}
                         whileHover={{ backgroundColor: "#2c5282" }}
                         whileTap={{ backgroundColor: "#1a365d" }}
                     >
-                        Sign In
+                        Sign Up
                     </motion.button>
                 </form>
-                <p className="text-center my-4">Or</p>
-                <motion.button
-                    className="w-full py-2 px-4 bg-white border border-gray-400 text-gray-700 rounded-md hover:bg-gray-100 transition-colors"
-                    onClick={handleSignInWithGoogle}
-                    whileHover={{ backgroundColor: "#f6e05e" }}
-                    whileTap={{ backgroundColor: "#fbbf24" }}
-                >
-                    Sign In With Google
-                </motion.button>
             </motion.div>
         </div>
     );
 };
 
-export default Login;
+export default SignUp;
